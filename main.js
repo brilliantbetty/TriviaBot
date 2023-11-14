@@ -99,19 +99,19 @@ let userHashes = {};
 client.on('message', async function (data) {
     let args = JSON.parse(data);
 
-    if(args.cmd == 'onlineSet') {
-	    for (var i = 0; i < args.users.length; i++) {
+    if (args.cmd == 'onlineSet') {
+        for (var i = 0; i < args.users.length; i++) {
             const { nick, hash } = args.users[i];
 
             userHashes[nick] = hash;
         }
     }
-    else if(args.cmd == 'onlineAdd') {
+    else if (args.cmd == 'onlineAdd') {
         const { nick, hash } = args;
 
         userHashes[nick] = hash;
     }
-    else if(args.cmd == 'onlineRemove') {
+    else if (args.cmd == 'onlineRemove') {
         const { nick, hash } = args;
 
         delete userHashes[nick];
@@ -209,8 +209,8 @@ client.on('message', async function (data) {
                         questionGuesses[currentTriviaQuestion.question] = {}; // Initialize guesses for the new question.
                         sendNextTriviaQuestion();
                         triviaTimer = setTimeout(() => {
-                            if(currentTriviaQuestion === null)
-    return; // Race condition
+                            if (currentTriviaQuestion === null)
+                                return; // Race condition
                             send({
                                 cmd: 'chat',
                                 text: `Time's up! The correct answer was ${currentTriviaQuestion.correct_answer}. Moving on to the next question...`
