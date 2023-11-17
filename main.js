@@ -88,7 +88,7 @@ client.on('open', function () {
 
     send({
         cmd: 'chat',
-        text: 'Hello, I am a trivia bot! To see the available categories, type ?categories. To skip a question, type ?skip. To check the scores, type ?scores.'
+        text: 'Hello, I am a trivia bot! To see the available categories, type ?categories. To choose a random category, type ?random. To skip a question, type ?skip. To check the scores, type ?scores.'
     });
 });
 
@@ -200,7 +200,16 @@ client.on('message', async function (data) {
                 }
             }
         } else {
-            const chosenCategory = text.toLowerCase();
+            let chosenCategory = text.toLowerCase();
+
+            if (chosenCategory === '?random') {
+                const categoryNames = Object.keys(categoryIDs);
+    
+                const randomIndex = Math.floor(Math.random() * categoryNames.length);
+    
+                chosenCategory = categoryNames[randomIndex];
+            }
+
             if (categoryIDs[chosenCategory]) {
                 try {
                     const triviaQuestion = await fetchTriviaQuestion(categoryIDs[chosenCategory]);
