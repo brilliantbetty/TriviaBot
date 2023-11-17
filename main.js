@@ -200,7 +200,16 @@ client.on('message', async function (data) {
                 }
             }
         } else {
-            const chosenCategory = text.toLowerCase();
+            let chosenCategory = text.toLowerCase();
+
+            if (chosenCategory === '?random') {
+                const categoryNames = Object.keys(categoryIDs);
+    
+                const randomIndex = Math.floor(Math.random() * categoryNames.length);
+    
+                chosenCategory = categoryNames[randomIndex];
+            }
+
             if (categoryIDs[chosenCategory]) {
                 try {
                     const triviaQuestion = await fetchTriviaQuestion(categoryIDs[chosenCategory]);
